@@ -1,0 +1,29 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        //创建一个虚拟头结点
+        ListNode dummyNode=new ListNode(val-1);
+        dummyNode.next=head; // 虚拟节点指向头节点
+        ListNode pre =  dummyNode; //设置循环的节点
+        while (pre.next != null){
+            if(pre.next.val == val){
+                pre.next = pre.next.next;
+            }else {
+                pre = pre.next;
+            }
+        }
+        return dummyNode.next;
+    }
+}
+
+//runtime:1 ms
+//memory:46.7 MB
