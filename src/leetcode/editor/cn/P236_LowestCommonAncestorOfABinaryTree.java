@@ -57,7 +57,6 @@ public class P236_LowestCommonAncestorOfABinaryTree {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -67,12 +66,23 @@ public class P236_LowestCommonAncestorOfABinaryTree {
  *     TreeNode(int x) { val = x; }
  * }
  */
-class Solution {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
+    class Solution {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            return dfs(root,p,q);
+        }
+
+        private TreeNode dfs(TreeNode root, TreeNode p, TreeNode q) {
+            if (root == null) return null;
+            // 当有p或者q的时候
+            if (root == p || root == q) return root; // 当找到p或者q返回当前
+            // 后序, 左右中
+            TreeNode left = dfs(root.left,p,q);
+            TreeNode right = dfs(root.right,p,q);
+            // 当left和right
+            if (left != null && right != null) return root;
+            return left == null ? right : left;
+        }
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
 
     //leetcode submit region end(Prohibit modification and deletion)
 }
