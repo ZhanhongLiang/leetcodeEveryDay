@@ -56,13 +56,26 @@ public class P1049_LastStoneWeightIi {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int lastStoneWeightII(int[] stones) {
-        
+    class Solution {
+        public int lastStoneWeightII(int[] stones) {
+            int[] dp = new int[1501]; // j代表重量之和
+            // 初始化
+            for (int i = 0; i < dp.length; i++) {
+                dp[i] = 0;
+            }
+            int sum  = 0;
+            for (int i = 0; i < stones.length; i++) {
+                sum += stones[i];
+            }
+            if (sum == 0) return 0;
+            int weight = sum / 2;
+            for (int i = 0; i < stones.length; i++) {
+                for (int j = weight; j >= stones[i]; j--) {
+                    dp[j] = Math.max(dp[j], dp[j - stones[i] ] + stones[i]);
+                }
+            }
+            return  sum - dp[weight] - dp[weight];
+        }
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
-
     //leetcode submit region end(Prohibit modification and deletion)
 }
