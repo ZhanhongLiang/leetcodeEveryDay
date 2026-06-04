@@ -47,6 +47,8 @@
 
 package leetcode.editor.cn;
 
+import java.util.Arrays;
+
 /**
  * 最长递增子序列
  * @author DY
@@ -61,7 +63,29 @@ public class P300_LongestIncreasingSubsequence {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int lengthOfLIS(int[] nums) {
+            //dp[i]表示i之前包括i的以nums[i]结尾的最⻓递增⼦序列的⻓度
+            // 先背包后物品顺序
+            // 初始化
+            // dp[i] 表示以 nums[i] 结尾的最长严格递增子序列长度
+            if (nums.length <= 1) {
+                return nums.length;
+            }
 
+            int[] dp = new int[nums.length];
+            Arrays.fill(dp, 1); // 这个是初始化参数,全部初始为0
+            int res = 1; // 前面已经边界判断，怎么至少有1个长度
+            // 先背包后物品
+            for (int i = 1; i < nums.length; i++) {
+                for(int j = 0; j < i; j++) {
+                    // 因为需要递增非连续子序列，所以需要判断大小
+                    if(nums[i] > nums[j]) {
+                        dp[i] = Math.max(dp[i], dp[j] + 1);
+                    }
+                }
+                // res结果保存
+                res = Math.max(res, dp[i]); // 因为dp[i]不一定是存当前最长的,所以需要用res存储全局最长
+            }
+            return res;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
