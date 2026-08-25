@@ -43,7 +43,7 @@
 //
 // 进阶：你可以想出一个时间复杂度小于 O(n²) 的算法吗？ 
 //
-// Related Topics 数组 哈希表 👍 20258 👎 0
+// Related Topics 数组 哈希表 👍 21247 👎 0
 
 
 package leetcode.editor.cn;
@@ -51,29 +51,40 @@ package leetcode.editor.cn;
 /**
  * 两数之和
  * @author DY
- * @date 2025-10-24 22:18:55
+ * @date 2026-08-12 21:31:40
  */
-public class P1_TwoSum{
-	 public static void main(String[] args) {
-	 	 //测试代码
-	 	 Solution solution = new P1_TwoSum().new Solution();
-	 }
-	 
-//力扣代码
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] + nums[j] == target) {
-                    return new int[]{i, j};
-                }
-            }
-        }
-        throw new IllegalArgumentException("No two sum solution");
+public class P1_TwoSum {
+    public static void main(String[] args) {
+        Solution solution = new P1_TwoSum().new Solution();
+        // 在此处编写本地测试逻辑
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
 
+    //力扣代码
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int[] twoSum(int[] nums, int target) {
+            // 哈希表
+            HashMap<Integer, Integer> haspMap = new HashMap<>();
+            //
+            for (int i = 0; i < nums.length; i++) {
+                int complement = target - nums[i];
+                if (haspMap.containsKey(complement)) {
+                    return new int[]{haspMap.get(complement), i};
+                }
+                haspMap.put(nums[i], i);
+            }
+            return new int[]{};
+        }
+        // 暴力法
+//            for (int i = 0; i < nums.length; i++) {
+//                for (int j = i + 1; j < nums.length; j++) {
+//                    if (nums[i] + nums[j] == target) {
+//                        return new int[]{i, j};
+//                    }
+//                }
+//            }
+//            return new int[]{};
+//        }
+    }
+    //leetcode submit region end(Prohibit modification and deletion)
 }
-

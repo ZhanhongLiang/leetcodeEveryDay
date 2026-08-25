@@ -38,7 +38,7 @@
 // 题目数据保证列表表示的数字不含前导零 
 // 
 //
-// Related Topics 递归 链表 数学 👍 11578 👎 0
+// Related Topics 递归 链表 数学 👍 12060 👎 0
 
 
 package leetcode.editor.cn;
@@ -46,32 +46,64 @@ package leetcode.editor.cn;
 /**
  * 两数相加
  * @author DY
- * @date 2025-10-24 23:18:46
+ * @date 2026-08-19 16:09:20
  */
-public class P2_AddTwoNumbers{
-	 public static void main(String[] args) {
-	 	 //测试代码
-	 	 Solution solution = new P2_AddTwoNumbers().new Solution();
-	 }
-	 
-//力扣代码
-//leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        
+public class P2_AddTwoNumbers {
+    public static void main(String[] args) {
+        Solution solution = new P2_AddTwoNumbers().new Solution();
+        // 在此处编写本地测试逻辑
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
 
-}
+    //力扣代码
+    //leetcode submit region begin(Prohibit modification and deletion)
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode() {}
+     *     ListNode(int val) { this.val = val; }
+     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    class Solution {
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            ListNode head = null;
+            ListNode tail = null;
 
+            int carry = 0; // 进位
+            // 记录进位
+            while (l1 != null ||  l2 != null || carry != 0) {
+                int sum = carry;
+                // 加上 l1 当前位
+                if (l1 != null) {
+                    sum += l1.val;
+                    l1 = l1.next;
+                }
+
+                // 加上 l2 当前位
+                if (l2 != null) {
+                    sum += l2.val;
+                    l2 = l2.next;
+                }
+                // 当前位数字
+                int val = sum % 10;
+                // 更新进位
+                carry = sum / 10;
+                // 创建新节点
+                ListNode node = new ListNode(val);
+
+                // 尾插结果链表
+                if (head == null) {
+                    head = node;
+                    tail = node;
+                } else {
+                    tail.next = node;
+                    tail = tail.next;
+                }
+            }
+            return head;
+        }
+    }
+    //leetcode submit region end(Prohibit modification and deletion)
+}

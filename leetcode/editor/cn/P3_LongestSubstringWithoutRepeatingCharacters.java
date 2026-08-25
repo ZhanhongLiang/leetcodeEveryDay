@@ -32,11 +32,11 @@
 // 提示： 
 //
 // 
-// 0 <= s.length <= 5 * 10⁴ 
+// 0 <= s.length <= 10⁵ 
 // s 由英文字母、数字、符号和空格组成 
 // 
 //
-// Related Topics 哈希表 字符串 滑动窗口 👍 11286 👎 0
+// Related Topics 哈希表 字符串 滑动窗口 👍 11584 👎 0
 
 
 package leetcode.editor.cn;
@@ -44,7 +44,7 @@ package leetcode.editor.cn;
 /**
  * 无重复字符的最长子串
  * @author DY
- * @date 2026-02-16 17:46:35
+ * @date 2026-08-20 00:26:00
  */
 public class P3_LongestSubstringWithoutRepeatingCharacters {
     public static void main(String[] args) {
@@ -55,8 +55,26 @@ public class P3_LongestSubstringWithoutRepeatingCharacters {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int lengthOfLongestSubstring(String s) {
-            System.out.println("test");
-            return 0;
+            Map<Character, Integer> window = new HashMap<>(); // 还是滑动窗口
+            int res = 0;
+            int left = 0, right = 0;
+            int valid = 0;
+            while (right < s.length()) {
+                char c = s.charAt(right);
+                right++;
+                // 进行窗口内数据一系列更新
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                // 判断左侧窗口是否要收缩
+                // 当窗口内出现重复数，就要缩小窗口
+                while(window.get(c) > 1){
+                    char d = s.charAt(left);
+                    left++;
+                    // 进行窗口内数据的一系列更新
+                    window.put(d, window.get(d) - 1);
+                }
+                res = Math.max(res, right - left);
+            }
+            return res;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)

@@ -1,0 +1,120 @@
+//你在与一位习惯从右往左阅读的朋友发消息，他发出的文字顺序都与正常相反但单词内容正确，为了和他顺利交流你决定写一个转换程序，把他所发的消息 message 转
+//换为正常语序。 
+//
+// 注意：输入字符串 message 中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空
+//格。 
+//
+// 
+//
+// 示例 1： 
+//
+// 
+//输入: message = "the sky is blue"
+//输出: "blue is sky the"
+// 
+//
+// 示例 2： 
+//
+// 
+//输入: message = "  hello world!  "
+//输出: "world! hello"
+//解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。
+// 
+//
+// 示例 3： 
+//
+// 
+//输入: message = "a good   example"
+//输出: "example good a"
+//解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
+// 
+//
+// 
+//
+// 提示： 
+//
+// 
+// 0 <= message.length <= 10⁴ 
+// message 中包含英文大小写字母、空格和数字 
+// 
+//
+// 注意： 
+//
+// 
+// 本题与主站 151 题相同：https://leetcode.cn/problems/reverse-words-in-a-string/ 
+// 
+//
+// 
+//
+// Related Topics 双指针 字符串 👍 349 👎 0
+
+
+package leetcode.editor.cn;
+
+/**
+ * 字符串中的单词反转
+ * @author DY
+ * @date 2026-08-21 19:29:23
+ */
+public class PLCR 181_FanZhuanDanCiShunXuLcof {
+    public static void main(String[] args) {
+        Solution solution = new PLCR 181_FanZhuanDanCiShunXuLcof().new Solution();
+        // 在此处编写本地测试逻辑
+    }
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public String reverseMessage(String message) {
+            char[] arr = message.toCharArray(); // 转换为Cahr数组好修改
+            int len = arr.length;
+            // 清楚多余空格
+            // 这里用了快慢指针法，去掉中间多余的空格
+            int slow = 0;
+            for (int fast = 0; fast < arr.length; fast++) {
+                // 普通字符直接写入
+                if (arr[fast] != ' ') {
+                    arr[slow++] = arr[fast];
+                }
+                // 空格：前面必须有字符，并且前一个字符不能也是空格
+                else if (slow > 0 && arr[slow - 1] != ' ') {
+                    arr[slow++] = ' ';
+                }
+            }
+            // 去掉最后可能存在的空格
+            if (slow > 0 && arr[slow - 1] == ' ') {
+                slow--;
+            }
+            // 此时 slow 就是有效字符长度
+            len = slow;
+            // 整体反转整个字符串
+            reverse(arr,0, len - 1);
+            // 再反转每个单词
+            // 还是快慢指针法
+            slow = 0;
+            for (int fast = 0; fast < arr.length; fast++) {
+                if (arr[fast] == ' ') {
+                    // 反转单词
+                    reverse(arr,slow, fast - 1);
+                    slow = fast + 1;
+                }
+            }
+            // 最后一个单词不会遇到空格，所以要单独反转
+            reverse(arr, slow, len - 1);
+
+            // 只返回有效区域
+            return new String(arr, 0, len);
+        }
+
+        // 反转算法
+        private void reverse(char[] arr, int start, int end) {
+            while (start < end) {
+                char temp = arr[start];
+                arr[start] = arr[end];
+                arr[end] = temp;
+                start++;
+                end--;
+            }
+        }
+    }
+    //leetcode submit region end(Prohibit modification and deletion)
+}

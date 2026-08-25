@@ -2,9 +2,26 @@ package leetcode.editor.cn;
 
 import java.util.List;
 
+//class Node {
+//    public int val;
+//    public List<Node> children;
+//
+//    public Node() {}
+//
+//    public Node(int _val) {
+//        val = _val;
+//    }
+//
+//    public Node(int _val, List<Node> _children) {
+//        val = _val;
+//        children = _children;
+//    }
+//};
+
 class Node {
     public int val;
-    public List<Node> children;
+    public Node left;
+    public Node right;
 
     public Node() {}
 
@@ -12,9 +29,10 @@ class Node {
         val = _val;
     }
 
-    public Node(int _val, List<Node> _children) {
+    public Node(int _val,Node _left,Node _right) {
         val = _val;
-        children = _children;
+        left = _left;
+        right = _right;
     }
 };
 

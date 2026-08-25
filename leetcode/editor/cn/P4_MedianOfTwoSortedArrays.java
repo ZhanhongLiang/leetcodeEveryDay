@@ -52,13 +52,53 @@ public class P4_MedianOfTwoSortedArrays {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        
+    class Solution {
+        public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+            // 保证 nums1 是较短数组
+            // 从最小长度的数组开始遍历
+            if (nums1.length > nums2.length) {
+                return findMedianSortedArrays(nums2, nums1);
+            }
+            int m = nums1.length;
+            int n = nums2.length;
+            int left = 0;
+            int right = m;
+            double res = 0.0;
+            // 左半部分需要的元素数量
+            int totalLeft = (m + n + 1) / 2;
+            // 需要先从短的数组开始，i是从0开始
+            // 二分法
+            while (left <= right){
+                // nums1 的切割位置
+                int i = left + (right - left) / 2; // mid位置
+                // nums2 的切割位置
+                int j = totalLeft - i;
+                // nums1左边最大数
+                int nums1LeftMax = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
+                // nums1右边最小值
+                int  nums1RightMin = (i == m) ? Integer.MAX_VALUE : nums1[i];
+                // nums2左边最大值
+                int nums2LeftMax = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
+                // nums2右边最小值
+                int nums2RightMin = (j == n) ? Integer.MAX_VALUE : nums2[j];
+                if (nums1LeftMax <= nums2RightMin && nums2LeftMax <= nums1RightMin){
+                    // 偶数
+                    if ((m + n) % 2 == 0){
+                        return (Math.max(nums1LeftMax, nums2LeftMax)
+                                + Math.min(nums1RightMin, nums2RightMin)) / 2.0;
+                    }else{
+                        return Math.max(nums1LeftMax, nums2LeftMax);
+                    }
+                }else if (nums1LeftMax > nums2RightMin){
+                    // 左边数太多
+                    right = i - 1;
+                }else{
+                    // 左边数太少
+                    left = i + 1;
+                }
+            }
+            return 0.0;
+        }
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
-
     //leetcode submit region end(Prohibit modification and deletion)
 }
